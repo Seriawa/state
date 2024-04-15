@@ -10,7 +10,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Счетчик'),
+          title: const Center(
+            child: Text(
+              'Счетчик',
+            ),
+          ),
+          backgroundColor: Color.fromARGB(255, 4, 0, 105),
         ),
         body: Counter(),
       ),
@@ -24,57 +29,179 @@ class Counter extends StatefulWidget {
 }
 
 class _CounterState extends State<Counter> {
-  int _counter = 0;
+  double _counter1 = 0;
+  double _counter2 = 0;
+  double otvet = 0;
 
-  void _incrementCounter() {
+  void _incrementCounter1() {
     setState(() {
-      _counter++;
+      _counter1++;
     });
   }
 
-  void _decrementCounter() {
+  void _incrementCounter2() {
     setState(() {
-      _counter--;
+      _counter2++;
     });
   }
 
-  void _nullCounter() {
+  void _decrementCounter1() {
     setState(() {
-      _counter = 0;
+      _counter1--;
+    });
+  }
+
+  void _decrementCounter2() {
+    setState(() {
+      _counter2--;
+    });
+  }
+
+  void _nullCounter1() {
+    setState(() {
+      _counter1 = 0;
+    });
+  }
+
+  void _nullCounter2() {
+    setState(() {
+      _counter2 = 0;
+    });
+  }
+
+  void _plus() {
+    setState(() {
+      otvet = _counter1 + _counter2;
+    });
+  }
+
+  void _minus() {
+    setState(() {
+      otvet = _counter1 - _counter2;
+    });
+  }
+
+  void _umnozh() {
+    setState(() {
+      otvet = _counter1 * _counter2;
+    });
+  }
+
+  void _delit() {
+    setState(() {
+      otvet = _counter1 / _counter2;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const Text(
-            'Считай',
-          ),
-          Text(
-            '$_counter',
-            style: Theme.of(context).textTheme.headline4,
-          ),
-          Row(
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Container(
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  '$_counter1',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+                const SizedBox(
+                  width: 110,
+                ),
+                Text(
+                  '$_counter2',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+              ]),
+        ),
+        Container(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               IconButton(
                 icon: const Icon(Icons.remove),
-                onPressed: _decrementCounter,
+                onPressed: _decrementCounter1,
               ),
               IconButton(
                 icon: const Icon(Icons.add),
-                onPressed: _incrementCounter,
+                onPressed: _incrementCounter1,
+              ),
+              const SizedBox(
+                width: 50,
+              ),
+              IconButton(
+                icon: const Icon(Icons.remove),
+                onPressed: _decrementCounter2,
+              ),
+              IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: _incrementCounter2,
               ),
             ],
           ),
-          SizedBox(
-              child: TextButton(
-                  onPressed: _nullCounter, child: const Text('Обнулиться')))
-        ],
-      ),
+        ),
+        Container(
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextButton(
+                    onPressed: _nullCounter1,
+                    child: const Text('Обнулиться 1',
+                        style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)))),
+                const SizedBox(
+                  width: 50,
+                ),
+                TextButton(
+                    onPressed: _nullCounter2,
+                    child: const Text('Обнулиться 2',
+                        style: TextStyle(color: Color.fromARGB(255, 0, 0, 0))))
+              ]),
+        ),
+        Container(
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ElevatedButton(
+                    onPressed: _plus,
+                    child: Text('+'),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 4, 0, 105))),
+                const SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton(
+                    onPressed: _minus,
+                    child: Text('-'),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 4, 0, 105))),
+                const SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton(
+                    onPressed: _umnozh,
+                    child: Text('*'),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 4, 0, 105))),
+                const SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton(
+                    onPressed: _delit,
+                    child: Text('/'),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 4, 0, 105)))
+              ]),
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 30),
+          child: Text(
+            'Ответ: $otvet',
+            style: const TextStyle(
+                color: Color.fromARGB(255, 0, 0, 0),
+                fontWeight: FontWeight.w900),
+          ),
+        ),
+      ]),
     );
   }
 }
